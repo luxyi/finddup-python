@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import hashlib
 import os
 
 
@@ -7,6 +8,11 @@ class File(object):
 
     def __init__(self, abs_path):
         self.abs_path = abs_path
+        self.hash_code = None
+
+    def generate_hash_code(self):
+        with open(self.abs_path, 'rb') as f:
+            self.hash_code = hashlib.sha1(f.read()).hexdigest()
 
 
 class Folder(object):
