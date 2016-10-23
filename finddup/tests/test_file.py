@@ -5,7 +5,7 @@ import finddup
 
 
 def test_generate_hash_code():
-    abs_path = os.path.join('tests', 'data', 'file1.txt')
+    abs_path = os.path.join('tests', 'data', 'root_dir', 'file1.txt')
     f = finddup.File(abs_path)
     assert f.hash_code is None
     f.generate_hash_code()

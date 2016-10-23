@@ -3,6 +3,8 @@
 import hashlib
 import os
 
+_BASE_DIR = os.path.dirname(__file__)
+
 
 class File(object):
 
@@ -32,3 +34,29 @@ class Folder(object):
             return i.abs_path
 
         return sorted(folder_files, key=cmp_key)
+
+
+class Profile(object):
+
+    _ROOT_DIR = '/rootdir'
+
+    def __init__(self, name, root_dir=None):
+        self.__name = name
+        self.root_dir = root_dir
+        self.__profile_file_name = '{}.properties'.format(self.__name)
+
+        profile_file_path = os.path.join(_BASE_DIR, self.__profile_file_name)
+        if os.path.exists(profile_file_path):
+            line_no = 0
+            with open(profile_file_path, 'rb') as f:
+                for line in f:
+                    line_no += 1
+                    if line_no == 1:
+                        parts = line.strip().split('=')
+                        if parts[0] == Profile._ROOT_DIR:
+                            self.root_dir = parts[1]
+                            break
+        else:
+            with open(profile_file_path, 'wb') as f:
+                line = '{}={}'.format(Profile._ROOT_DIR, self.root_dir)
+                f.write(line+os.linesep)
