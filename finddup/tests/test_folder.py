@@ -4,7 +4,7 @@ import os
 import finddup
 
 
-def test_folder_get_files():
+def test_get_files():
     base_path = os.path.join('tests', 'data')
 
     folder = finddup.Folder(base_path)
